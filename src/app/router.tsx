@@ -10,6 +10,7 @@ import { RegisterPage } from '../features/auth/pages/RegisterPage';
 import { DashboardPage } from '../features/users/pages/DashboardPage';
 import { SubjectListPage } from '../features/subjects/pages/SubjectListPage';
 import { ExamListPage } from '../features/exams/pages/ExamListPage';
+import { ExamDetailPage } from '../features/exams/pages/ExamDetailPage';
 import { TakeExamPage } from '../features/exam-attempts/pages/TakeExamPage';
 import { ResultPage } from '../features/exam-attempts/pages/ResultPage';
 import { ProfilePage } from '../features/users/pages/ProfilePage';
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
       { path: ROUTES.DASHBOARD, element: <DashboardPage /> },
       { path: ROUTES.SUBJECTS, element: <SubjectListPage /> },
       { path: ROUTES.EXAMS, element: <ExamListPage /> },
+      { path: ROUTES.EXAM_DETAIL(':id'), element: <ExamDetailPage /> },
       { path: ROUTES.TAKE_EXAM(':examId'), element: <TakeExamPage /> },
       { path: ROUTES.EXAM_RESULT(':id'), element: <ResultPage /> },
       { path: ROUTES.HISTORY, element: <HistoryPage /> },
@@ -53,6 +55,7 @@ const router = createBrowserRouter([
           { path: ROUTES.ADMIN, element: <AdminOverviewPage /> },
           { path: ROUTES.ADMIN_SUBJECTS, element: <SubjectListPage /> },
           { path: ROUTES.ADMIN_EXAMS, element: <ExamListPage /> },
+          { path: ROUTES.ADMIN_EXAM_DETAIL(':id'), element: <ExamDetailPage /> },
           { path: ROUTES.ADMIN_AI, element: <AiGeneratorPage /> },
           { path: ROUTES.ADMIN_STATS, element: <AdminOverviewPage /> },
           { path: ROUTES.ADMIN_USERS, element: <ProfilePage /> }, // Placeholder
