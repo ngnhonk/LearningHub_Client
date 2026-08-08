@@ -19,7 +19,9 @@ export const authApi = {
   },
 
   refreshToken: async () => {
-    const res = await axiosClient.post<ApiResponse<{ accessToken: string }>>(ENDPOINTS.AUTH.TOKEN);
-    return res.data.responseObject;
+    const res = await axiosClient.post<ApiResponse<{ accessToken: string } | string>>(ENDPOINTS.AUTH.TOKEN);
+    const obj = res.data.responseObject;
+    const accessToken = typeof obj === 'string' ? obj : obj?.accessToken;
+    return { accessToken };
   },
 };

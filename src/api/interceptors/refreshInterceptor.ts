@@ -53,7 +53,8 @@ export function applyRefreshInterceptor(client: AxiosInstance) {
       try {
         // Gọi refresh token — dùng cookie HttpOnly
         const res = await client.post(ENDPOINTS.AUTH.TOKEN);
-        const newToken: string = res.data?.responseObject?.accessToken;
+        const rawToken = res.data?.responseObject;
+        const newToken: string = typeof rawToken === 'string' ? rawToken : rawToken?.accessToken;
 
         if (!newToken) throw new Error('No token in refresh response');
 

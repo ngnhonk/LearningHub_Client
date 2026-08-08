@@ -32,9 +32,9 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: 'learninghub-auth',
-      // Chỉ persist user và isAuthenticated, KHÔNG persist token vào localStorage
       partialize: (state) => ({
         user: state.user,
+        accessToken: state.accessToken,
         isAuthenticated: state.isAuthenticated,
       }),
     }
