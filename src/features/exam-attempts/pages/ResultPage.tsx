@@ -29,10 +29,25 @@ export function ResultPage() {
 
   if (!result) return null;
 
-  const passed = result.passed;
-  const scorePercent = result.total_marks > 0
-    ? Math.round((result.score / result.total_marks) * 100)
-    : 0;
+  const raw = result as any;
+  const attemptData = raw.attempt || raw;
+  const score = attemptData.score ?? raw.score ?? 0;
+  const totalMarks = raw.total_marks ?? 10;
+  const scorePercent = totalMarks > 0 ? Math.round((score / totalMarks) * 100) : (raw.pass_percentage ?? 0);
+  const passed = raw.passed ?? (scorePercent >= 50);
+  const correctCount = raw.correct_count ?? 0;
+  const wrongCount = raw.wrong_count ?? 0;
+  const timeSpentSeconds = attemptData.time_spent_seconds ?? raw.time_spent_seconds ?? 0;
+
+  const rawDetails: any[] = raw.details || raw.questions || [];
+  const questionsList = rawDetails.map((item, idx) => ({
+    question_id: item.question?.id || item.question_id || String(idx),
+    question_content: item.question?.content || item.question_content || '',
+    selected_answer_content: item.selected_answer?.content || item.selected_answer_content || '',
+    correct_answer_content: item.correct_answer?.content || item.correct_answer_content || '',
+    is_correct: Boolean(item.is_correct),
+    explanation: item.question?.explanation || item.explanation || '',
+  }));
 
   return (
     <div className="min-h-screen bg-[var(--color-background)] py-8 px-4"
@@ -70,10 +85,10 @@ export function ResultPage() {
           {/* Stats row */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
             {[
-              { label: 'Điểm số', value: formatScore(result.score, result.total_marks), color: 'teal' },
-              { label: 'Đúng', value: `${result.correct_count} câu`, color: 'green' },
-              { label: 'Sai', value: `${result.wrong_count} câu`, color: 'red' },
-              { label: 'Thời gian', value: formatSeconds(result.time_spent_seconds), color: 'blue' },
+              { label: 'Điểm số', value: formatScore(score, totalMarks), color: 'teal' },
+              { label: 'Đúng', value: `${correctCount} câu`, color: 'green' },
+              { label: 'Sai', value: `${wrongCount} câu`, color: 'red' },
+              { label: 'Thời gian', value: formatSeconds(timeSpentSeconds), color: 'blue' },
             ].map((stat) => (
               <div key={stat.label} className="bg-[var(--color-muted-bg)] rounded-2xl p-3 border-2 border-[var(--color-border)]">
                 <p className="text-xs font-semibold text-[var(--color-muted)]">{stat.label}</p>
@@ -102,7 +117,7 @@ export function ResultPage() {
           📋 Chi tiết từng câu
         </h2>
         <div className="space-y-3">
-          {result.questions.map((q, i) => (
+          {questionsList.map((q, i) => (
             <div key={q.question_id}
               className={cn(
                 'rounded-2xl p-4 border-3 transition-all',

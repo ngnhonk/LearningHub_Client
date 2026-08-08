@@ -29,7 +29,14 @@ export const attemptsApi = {
   },
 
   getUserHistory: async (userId: string = 'me'): Promise<ExamAttempt[]> => {
-    const res = await axiosClient.get<ApiResponse<ExamAttempt[]>>(ENDPOINTS.ATTEMPTS.BY_USER(userId));
-    return res.data.responseObject;
+    try {
+      const res = await axiosClient.get<ApiResponse<ExamAttempt[]>>(ENDPOINTS.ATTEMPTS.BY_USER(userId));
+      return res.data.responseObject ?? [];
+    } catch (err: unknown) {
+      if ((err as { response?: { status?: number } })?.response?.status === 404) {
+        return [];
+      }
+      throw err;
+    }
   },
 };

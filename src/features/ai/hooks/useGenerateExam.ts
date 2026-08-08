@@ -13,7 +13,10 @@ export function useGenerateExam() {
       qc.invalidateQueries({ queryKey: EXAMS_KEY });
       toast.success('AI đã tạo đề thi thành công! 🤖✨');
     },
-    onError: () => toast.error('AI không thể tạo đề. Thử lại hoặc đổi provider!'),
+    onError: (err: unknown) => {
+      const msg = (err as { response?: { data?: { message?: string } }; message?: string })?.response?.data?.message || (err as { message?: string })?.message;
+      toast.error(`AI không thể tạo đề: ${msg || 'Thử lại hoặc đổi provider!'}`);
+    },
   });
 }
 

@@ -55,12 +55,10 @@ export function TakeExamPage() {
   }, [attemptId, selectedAnswers, saveAnswers]);
 
   const handleTimeUp = useCallback(() => {
-    saveAnswers();
     submitAttempt();
-  }, [saveAnswers, submitAttempt]);
+  }, [submitAttempt]);
 
   const handleSubmit = () => {
-    saveAnswers();
     submitAttempt();
     setShowSubmitModal(false);
   };
