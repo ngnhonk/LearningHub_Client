@@ -40,12 +40,26 @@ export const ENDPOINTS = {
   QUESTIONS: {
     LIST: '/questions',
     BY_ID: (id: string) => `/questions/${id}`,
+    CREATE: '/questions',
+    UPDATE: (id: string) => `/questions/${id}`,
+    DELETE: (id: string) => `/questions/${id}`,
   },
 
   // Answers
   ANSWERS: {
     BY_QUESTION: (questionId: string) => `/answers/question/${questionId}`,
     CREATE: '/answers',
+    UPDATE: (id: string) => `/answers/${id}`,
+    DELETE: (id: string) => `/answers/${id}`,
+  },
+
+  // Exam Questions
+  EXAM_QUESTIONS: {
+    LIST: '/exam-questions',
+    BY_ID: (id: string) => `/exam-questions/${id}`,
+    BY_EXAM: (examId: string) => `/exam-questions/exam/${examId}`,
+    CREATE: '/exam-questions',
+    DELETE: (id: string) => `/exam-questions/${id}`,
   },
 
   // Exam Attempts

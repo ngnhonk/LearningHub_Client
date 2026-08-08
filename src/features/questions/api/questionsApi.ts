@@ -15,8 +15,17 @@ export const questionsApi = {
   },
 
   create: async (payload: { content: string }): Promise<Question> => {
-    const res = await axiosClient.post<ApiResponse<Question>>(ENDPOINTS.QUESTIONS.LIST, payload);
+    const res = await axiosClient.post<ApiResponse<Question>>(ENDPOINTS.QUESTIONS.CREATE, payload);
     return res.data.responseObject;
+  },
+
+  update: async (id: string, payload: { content: string }): Promise<Question> => {
+    const res = await axiosClient.put<ApiResponse<Question>>(ENDPOINTS.QUESTIONS.UPDATE(id), payload);
+    return res.data.responseObject;
+  },
+
+  delete: async (id: string): Promise<void> => {
+    await axiosClient.delete(ENDPOINTS.QUESTIONS.DELETE(id));
   },
 };
 
@@ -29,5 +38,30 @@ export const answersApi = {
   create: async (payload: { question_id: string; content: string; is_correct: boolean }): Promise<Answer> => {
     const res = await axiosClient.post<ApiResponse<Answer>>(ENDPOINTS.ANSWERS.CREATE, payload);
     return res.data.responseObject;
+  },
+
+  update: async (id: string, payload: { content?: string; is_correct?: boolean }): Promise<Answer> => {
+    const res = await axiosClient.put<ApiResponse<Answer>>(ENDPOINTS.ANSWERS.UPDATE(id), payload);
+    return res.data.responseObject;
+  },
+
+  delete: async (id: string): Promise<void> => {
+    await axiosClient.delete(ENDPOINTS.ANSWERS.DELETE(id));
+  },
+};
+
+export const examQuestionsApi = {
+  getByExam: async (examId: string): Promise<Array<{ id: string; exam_id: string; question_id: string }>> => {
+    const res = await axiosClient.get<ApiResponse<Array<{ id: string; exam_id: string; question_id: string }>>>(ENDPOINTS.EXAM_QUESTIONS.BY_EXAM(examId));
+    return res.data.responseObject;
+  },
+
+  create: async (payload: { exam_id: string; question_id: string }): Promise<{ id: string; exam_id: string; question_id: string }> => {
+    const res = await axiosClient.post<ApiResponse<{ id: string; exam_id: string; question_id: string }>>(ENDPOINTS.EXAM_QUESTIONS.CREATE, payload);
+    return res.data.responseObject;
+  },
+
+  delete: async (id: string): Promise<void> => {
+    await axiosClient.delete(ENDPOINTS.EXAM_QUESTIONS.DELETE(id));
   },
 };
