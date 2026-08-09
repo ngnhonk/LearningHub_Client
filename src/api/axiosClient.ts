@@ -5,7 +5,7 @@ import axios from 'axios';
 import { applyAuthInterceptor } from './interceptors/authInterceptor';
 import { applyRefreshInterceptor } from './interceptors/refreshInterceptor';
 
-export const BASE_URL = 'http://localhost:8080';
+export const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
 const axiosClient = axios.create({
   baseURL: BASE_URL,
