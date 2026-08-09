@@ -50,7 +50,7 @@ export function ExamCard({ exam, onClick, onStart, onEdit, onDelete }: ExamCardP
           size="sm"
           dot
         >
-          {exam.is_published ? 'Đang mở' : 'Nháp'}
+          {exam.is_published ? 'Sẵn sàng' : 'Tạm khoá'}
         </Badge>
 
         {isAdmin && (
@@ -81,7 +81,7 @@ export function ExamCard({ exam, onClick, onStart, onEdit, onDelete }: ExamCardP
       <div className="grid grid-cols-3 gap-2 mb-4">
         {[
           { icon: <Clock size={12} />, label: formatDuration(exam.duration_minutes) },
-          { icon: <Trophy size={12} />, label: `${exam.total_marks}đ` },
+          { icon: <Trophy size={12} />, label: `${exam.total_marks} pts` },
           { icon: <Target size={12} />, label: `Đỗ ≥${exam.pass_percentage}%` },
         ].map((stat) => (
           <div key={stat.label} className="flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-xl"

@@ -29,7 +29,7 @@ export function formatDateShort(dateStr: string | null | undefined): string {
 // ---- Score formatting ----
 export function formatScore(score: number | null | undefined, total: number = 100): string {
   if (score === null || score === undefined) return '—';
-  return `${score}/${total}`;
+  return `${Number(score).toFixed(1)}/${total} pts`;
 }
 
 export function formatPercent(value: number): string {
