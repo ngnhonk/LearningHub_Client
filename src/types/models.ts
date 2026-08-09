@@ -183,6 +183,41 @@ export interface LearningAnalyticsData {
   top_students: TopStudent[];
 }
 
+export interface SystemStatisticsData {
+  users_breakdown: {
+    total: number;
+    students: number;
+    teachers: number;
+    admins: number;
+    new_7days: number;
+    new_30days: number;
+  };
+  auth_tokens: {
+    total_refresh_tokens: number;
+    active_tokens: number;
+    revoked_tokens: number;
+    expired_tokens: number;
+  };
+  ai_stats: {
+    ai_exams_count: number;
+    estimated_prompt_tokens: number;
+    estimated_completion_tokens: number;
+    estimated_total_tokens: number;
+    vector_points_count: number;
+    vector_status: string;
+  };
+  data_volumes: {
+    total_subjects: number;
+    total_exams: number;
+    published_exams: number;
+    draft_exams: number;
+    total_questions: number;
+    total_answers: number;
+    total_attempts: number;
+    total_user_answers: number;
+  };
+}
+
 // ---- AI ----
 export type AIDifficulty = 'easy' | 'medium' | 'hard' | 'mixed';
 export type AIProvider = 'openrouter' | 'ollama' | 'nvidia';

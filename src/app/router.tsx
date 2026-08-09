@@ -18,6 +18,7 @@ import { ProfilePage } from '../features/users/pages/ProfilePage';
 
 import { AdminOverviewPage } from '../features/statistics/pages/AdminOverviewPage';
 import { LearningStatisticsPage } from '../features/statistics/pages/LearningStatisticsPage';
+import { SystemStatisticsPage } from '../features/statistics/pages/SystemStatisticsPage';
 import { AiGeneratorPage } from '../features/ai/pages/AiGeneratorPage';
 import { UserManagementPage } from '../features/users/pages/UserManagementPage';
 
@@ -68,6 +69,7 @@ const router = createBrowserRouter([
         element: <AdminRoute />,
         children: [
           { path: ROUTES.ADMIN_USERS, element: <UserManagementPage /> },
+          { path: ROUTES.ADMIN_SYSTEM_STATS, element: <SystemStatisticsPage /> },
         ],
       },
     ],
