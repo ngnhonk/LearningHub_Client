@@ -22,5 +22,6 @@ export const ROUTES = {
   ADMIN_USERS: '/admin/users',
   ADMIN_AI: '/admin/ai',
   ADMIN_STATS: '/admin/statistics',
+  ADMIN_SYSTEM_STATS: '/admin/system-statistics',
   ADMIN_EXAM_STATS: (examId: string) => `/admin/statistics/exams/${examId}`,
 } as const;

@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import {
   BookOpen, ClipboardList, LayoutDashboard, LogOut,
   Settings, Sparkles, BarChart3, Users, GraduationCap,
-  History, ChevronLeft, ChevronRight
+  History, ChevronLeft, ChevronRight, Server
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '../../lib/utils';
@@ -41,7 +41,8 @@ const adminNavItems: NavItem[] = [
   { label: 'Môn học', to: ROUTES.ADMIN_SUBJECTS, icon: <BookOpen size={20} /> },
   { label: 'Đề thi', to: ROUTES.ADMIN_EXAMS, icon: <ClipboardList size={20} /> },
   { label: 'AI Generator', to: ROUTES.ADMIN_AI, icon: <Sparkles size={20} /> },
-  { label: 'Thống kê', to: ROUTES.ADMIN_STATS, icon: <BarChart3 size={20} /> },
+  { label: 'Thống kê Học tập', to: ROUTES.ADMIN_STATS, icon: <BarChart3 size={20} /> },
+  { label: 'Thống kê Hệ thống', to: ROUTES.ADMIN_SYSTEM_STATS, icon: <Server size={20} /> },
 ];
 
 export function Sidebar() {
