@@ -50,22 +50,22 @@ export function AboutPage() {
 
   const team = [
     {
-      name: 'Nguyễn Thành Nam',
+      name: 'Nguyễn Việt Hùng',
       role: 'Co-Founder & AI Architect',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=NamTech',
-      bio: 'Chuyên gia Trí tuệ nhân tạo với 8 năm kinh nghiệm nghiên cứu Machine Learning.',
+      avatar: 'https://api.dicebear.com/10.x/adventurer-neutral/svg?seed=Jerr',
+      bio: 'Sinh Viên năm cuối Đại học Phenikaa.',
     },
     {
-      name: 'Phạm Thu Trang',
+      name: 'Nguyễn Việt Hùng',
       role: 'Product Lead & EdTech Specialist',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=TrangEdu',
-      bio: 'Thạc sĩ Quản lý Giáo dục, cố vấn phương pháp học tập cá nhân hóa.',
+      avatar: 'https://api.dicebear.com/10.x/adventurer-neutral/svg?seed=Jerr',
+      bio: 'Sinh Viên năm cuối Đại học Phenikaa.',
     },
     {
-      name: 'Đặng Minh Đức',
+      name: 'Nguyễn Việt Hùng',
       role: 'Lead Fullstack Engineer',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=DucDev',
-      bio: 'Đam mê xây dựng hệ thống phần mềm hiệu năng cao và giao diện ấn tượng.',
+      avatar: 'https://api.dicebear.com/10.x/adventurer-neutral/svg?seed=Jerr',
+      bio: 'Sinh Viên năm cuối Đại học Phenikaa.',
     },
   ];
 
