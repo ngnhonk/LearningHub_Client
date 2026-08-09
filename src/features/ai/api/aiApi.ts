@@ -6,7 +6,7 @@ import type { GenerateExamPayload, VectorStatus } from '../../../types/models';
 export const aiApi = {
   generateExam: async (payload: GenerateExamPayload): Promise<unknown> => {
     const res = await axiosClient.post<ApiResponse<unknown>>(ENDPOINTS.AI.GENERATE_EXAM, payload, {
-      timeout: 120000,
+      timeout: 150000,
     });
     return res.data.responseObject;
   },
