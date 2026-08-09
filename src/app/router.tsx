@@ -16,8 +16,8 @@ import { TakeExamPage } from '../features/exam-attempts/pages/TakeExamPage';
 import { ResultPage } from '../features/exam-attempts/pages/ResultPage';
 import { ProfilePage } from '../features/users/pages/ProfilePage';
 
-// Admin pages
 import { AdminOverviewPage } from '../features/statistics/pages/AdminOverviewPage';
+import { LearningStatisticsPage } from '../features/statistics/pages/LearningStatisticsPage';
 import { AiGeneratorPage } from '../features/ai/pages/AiGeneratorPage';
 import { UserManagementPage } from '../features/users/pages/UserManagementPage';
 
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
           { path: ROUTES.ADMIN_EXAMS, element: <ExamListPage /> },
           { path: ROUTES.ADMIN_EXAM_DETAIL(':id'), element: <ExamEditPage /> },
           { path: ROUTES.ADMIN_AI, element: <AiGeneratorPage /> },
-          { path: ROUTES.ADMIN_STATS, element: <AdminOverviewPage /> },
+          { path: ROUTES.ADMIN_STATS, element: <LearningStatisticsPage /> },
         ],
       },
 
