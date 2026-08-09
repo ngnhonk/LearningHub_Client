@@ -6,12 +6,12 @@ export function FeaturesPage() {
   const mainFeatures = [
     {
       id: 'ai-gen',
-      title: 'Tạo Câu Hỏi Tự Động Bằng AI (AI Generator)',
-      desc: 'Công nghệ AI trích xuất câu hỏi trắc nghiệm tự động từ tài liệu học tập PDF/DOCX chỉ trong vài giây. Hỗ trợ tạo câu hỏi phân loại 4 mức độ tư duy.',
+      title: 'Tạo Đề Thi Tự Động Bằng AI',
+      desc: 'Công nghệ AI tự động tạo đề thi theo môn học chỉ trong ít phút, có thể nâng cao hiệu quả thông qua tài liệu upload. Hỗ trợ tạo câu hỏi phân loại 4 mức độ tư duy.',
       icon: Cpu,
       color: 'clay-purple',
       details: [
-        'Nhập văn bản bài giảng hoặc tải tệp PDF lên',
+        'Nhập văn bản bài giảng hoặc tải tệp .MD lên',
         'Tuỳ chỉnh số lượng câu hỏi và độ khó mong muốn',
         'Tự động sinh đáp án đúng và lời giải chi tiết',
         'Chỉnh sửa linh hoạt trước khi lưu vào ngân hàng đề',
@@ -179,25 +179,31 @@ export function FeaturesPage() {
         </div>
 
         <div className="clay-card p-4 sm:p-8 bg-[var(--color-surface)] overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[600px]">
+          <table className="w-full text-left border-collapse min-w-[650px]">
             <thead>
               <tr className="border-b-3 border-[var(--color-border-strong)]">
-                <th className="pb-4 font-black text-base text-[var(--color-foreground)]">Tiêu chí</th>
-                <th className="pb-4 font-black text-base text-red-500">Thi truyền thống</th>
-                <th className="pb-4 font-black text-base text-[var(--color-primary)]">LearningHub AI ⚡</th>
+                <th className="pb-4 pr-4 font-black text-base text-[var(--color-foreground)] w-1/3">Tiêu chí</th>
+                <th className="pb-4 px-4 font-black text-base text-red-500 w-1/3">Thi truyền thống</th>
+                <th className="pb-4 pl-4 font-black text-base text-[var(--color-primary)] w-1/3">LearningHub AI ⚡</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--color-border)] font-semibold text-sm">
               {comparisons.map((c, idx) => (
                 <tr key={idx} className="hover:bg-[var(--color-muted-bg)] transition-colors">
-                  <td className="py-4 text-[var(--color-foreground)] font-bold">{c.feature}</td>
-                  <td className="py-4 text-[var(--color-muted)] flex items-center gap-2">
-                    <X size={16} className="text-red-500 shrink-0" />
-                    <span>{c.traditional}</span>
+                  <td className="py-4 pr-4 text-[var(--color-foreground)] font-bold align-middle">
+                    {c.feature}
                   </td>
-                  <td className="py-4 text-[var(--color-primary-dark)] font-extrabold flex items-center gap-2">
-                    <Check size={16} className="text-emerald-500 shrink-0" />
-                    <span>{c.learninghub}</span>
+                  <td className="py-4 px-4 text-[var(--color-muted)] align-middle">
+                    <div className="flex items-center gap-2">
+                      <X size={18} className="text-red-500 shrink-0" />
+                      <span>{c.traditional}</span>
+                    </div>
+                  </td>
+                  <td className="py-4 pl-4 text-[var(--color-primary-dark)] font-extrabold align-middle">
+                    <div className="flex items-center gap-2">
+                      <Check size={18} className="text-emerald-500 shrink-0" />
+                      <span>{c.learninghub}</span>
+                    </div>
                   </td>
                 </tr>
               ))}
