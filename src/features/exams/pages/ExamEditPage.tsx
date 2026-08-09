@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import {
   ArrowLeft, Save, Plus, Trash2, Edit3, CheckCircle2, XCircle,
-  HelpCircle, Settings, FileText, Check, Search
+  Settings, FileText, Search
 } from 'lucide-react';
 import { AppShell } from '../../../components/layout/AppShell';
 import { Button } from '../../../components/ui/Button';
@@ -244,7 +244,7 @@ export function ExamEditPage() {
     setEditingItem(item);
     setEditQuestionContent(item.content);
     setEditAnswers(
-      item.answers.map((a) => ({ id: a.id, content: a.content, is_correct: a.is_correct }))
+      item.answers.map((a) => ({ id: a.id, content: a.content, is_correct: !!a.is_correct }))
     );
   };
 

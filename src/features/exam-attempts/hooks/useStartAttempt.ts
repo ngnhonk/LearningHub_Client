@@ -26,6 +26,7 @@ export function useStartAttempt() {
         active.questions,
         active.saved_answers,
         durationSeconds,
+        active.exam,
       );
       navigate(ROUTES.TAKE_EXAM(attempt.exam_id));
     },

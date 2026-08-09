@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Send } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Send, Flag } from 'lucide-react';
 import { ExamTimer } from '../components/ExamTimer';
 import { QuestionNavigator } from '../components/QuestionNavigator';
 import { AutoSaveIndicator } from '../components/AutoSaveIndicator';
@@ -18,8 +18,8 @@ export function TakeExamPage() {
   const { examId } = useParams<{ examId: string }>();
   const navigate = useNavigate();
   const {
-    questions, selectedAnswers, currentQuestionIndex,
-    setCurrentQuestion, setAnswer, attemptId, initAttempt,
+    questions, selectedAnswers, flaggedQuestions, currentQuestionIndex,
+    setCurrentQuestion, setAnswer, toggleFlag, attemptId, initAttempt,
   } = useAttemptStore();
 
   const { mutate: saveAnswers } = useSaveAnswers();
@@ -39,7 +39,7 @@ export function TakeExamPage() {
         const durationSeconds = durationMinutes * 60;
         const elapsed = Math.floor((Date.now() - new Date(active.attempt.started_at).getTime()) / 1000);
         const remaining = Math.max(0, durationSeconds - elapsed);
-        initAttempt(active.attempt.id, examId, active.questions, active.saved_answers, remaining);
+        initAttempt(active.attempt.id, examId, active.questions, active.saved_answers, remaining, active.exam);
         setIsLoading(false);
       })
       .catch(() => {
@@ -77,6 +77,7 @@ export function TakeExamPage() {
   const currentQuestion = questions[currentQuestionIndex];
   const answeredCount = Object.keys(selectedAnswers).length;
   const unansweredCount = questions.length - answeredCount;
+  const isCurrentFlagged = currentQuestion ? !!flaggedQuestions[currentQuestion.id] : false;
 
   return (
     <div className="min-h-screen bg-[var(--color-background)] flex flex-col"
@@ -117,14 +118,32 @@ export function TakeExamPage() {
             <div className="animate-slide-up">
               {/* Question card */}
               <div className="clay-card p-6 mb-6">
-                <div className="flex items-start gap-3 mb-5">
-                  <div className="w-10 h-10 rounded-2xl bg-[var(--color-primary)] border-2 border-[var(--color-primary-dark)] flex items-center justify-center shrink-0 text-white font-extrabold text-sm"
-                    style={{ fontFamily: 'var(--font-heading)' }}>
-                    {currentQuestionIndex + 1}
+                <div className="flex items-start justify-between gap-3 mb-5">
+                  <div className="flex items-start gap-3 flex-1 min-w-0">
+                    <div className="w-10 h-10 rounded-2xl bg-[var(--color-primary)] border-2 border-[var(--color-primary-dark)] flex items-center justify-center shrink-0 text-white font-extrabold text-sm"
+                      style={{ fontFamily: 'var(--font-heading)' }}>
+                      {currentQuestionIndex + 1}
+                    </div>
+                    <p className="text-base font-bold text-[var(--color-foreground)] leading-relaxed flex-1">
+                      {currentQuestion.content}
+                    </p>
                   </div>
-                  <p className="text-base font-bold text-[var(--color-foreground)] leading-relaxed flex-1">
-                    {currentQuestion.content}
-                  </p>
+
+                  {/* Flag Question Toggle */}
+                  <button
+                    type="button"
+                    onClick={() => toggleFlag(currentQuestion.id)}
+                    className={cn(
+                      'flex items-center gap-1.5 px-3 py-2 rounded-xl border-2 text-xs font-black transition-all cursor-pointer shrink-0',
+                      isCurrentFlagged
+                        ? 'bg-amber-100 border-amber-400 text-amber-900 shadow-[2px_2px_0px_#d97706]'
+                        : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-amber-50 hover:text-amber-700 hover:border-amber-300'
+                    )}
+                    title={isCurrentFlagged ? 'Bỏ đánh dấu câu này' : 'Đánh dấu để xem lại sau'}
+                  >
+                    <Flag size={14} className={isCurrentFlagged ? 'fill-amber-500 text-amber-600' : ''} />
+                    <span>{isCurrentFlagged ? 'Đã đánh dấu' : 'Đánh dấu'}</span>
+                  </button>
                 </div>
 
                 {/* Answers */}
@@ -190,8 +209,8 @@ export function TakeExamPage() {
           )}
         </div>
 
-        {/* Sidebar navigator */}
-        <aside className="hidden md:block w-64 border-l-3 border-[var(--color-border)] bg-[var(--color-surface)]"
+        {/* Sidebar navigator - 2-part prominent panel */}
+        <aside className="hidden md:block w-72 lg:w-80 border-l-3 border-[var(--color-border-strong)] bg-transparent shrink-0 sticky top-16 h-[calc(100vh-64px)] overflow-y-auto"
           style={{ borderLeftWidth: '3px' }}>
           <QuestionNavigator />
         </aside>
@@ -225,3 +244,4 @@ export function TakeExamPage() {
     </div>
   );
 }
+
