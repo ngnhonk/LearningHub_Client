@@ -130,6 +130,59 @@ export interface ExamStatistics {
   fail_rate: number;
 }
 
+export interface SubjectAnalytics {
+  subject_id: string;
+  subject_name: string;
+  total_exams: number;
+  total_attempts: number;
+  avg_score: number;
+  avg_time_seconds: number;
+  pass_rate: number;
+}
+
+export interface DetailedExamAnalytics {
+  exam_id: string;
+  exam_title: string;
+  subject_name: string;
+  total_attempts: number;
+  avg_score: number;
+  avg_time_seconds: number;
+  highest_score: number;
+  lowest_score: number;
+  pass_rate: number;
+}
+
+export interface TimePoint {
+  label: string;
+  attempts_count: number;
+  avg_score: number;
+}
+
+export interface TopStudent {
+  user_id: string;
+  full_name: string;
+  username: string;
+  attempts_count: number;
+  avg_score: number;
+  passed_count: number;
+}
+
+export interface LearningAnalyticsData {
+  summary: {
+    total_attempts: number;
+    overall_avg_score: number;
+    overall_avg_time_seconds: number;
+    overall_pass_rate: number;
+  };
+  subject_stats: SubjectAnalytics[];
+  exam_stats: DetailedExamAnalytics[];
+  time_series: {
+    daily: TimePoint[];
+    monthly: TimePoint[];
+  };
+  top_students: TopStudent[];
+}
+
 // ---- AI ----
 export type AIDifficulty = 'easy' | 'medium' | 'hard' | 'mixed';
 export type AIProvider = 'openrouter' | 'ollama' | 'nvidia';

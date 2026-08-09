@@ -84,5 +84,6 @@ export const ENDPOINTS = {
   STATISTICS: {
     EXAM: (examId: string) => `/statistics/exam/${examId}`,
     ADMIN_OVERVIEW: '/statistics/admin/overview',
+    LEARNING_ANALYTICS: '/statistics/learning-analytics',
   },
 } as const;
