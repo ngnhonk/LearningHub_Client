@@ -6,7 +6,9 @@ export function useAuth() {
   const accessToken = useAuthStore((s) => s.accessToken);
 
   const isAdmin = user?.role === 'admin';
+  const isTeacher = user?.role === 'teacher';
   const isStudent = user?.role === 'student';
+  const isTeacherOrAdmin = isTeacher || isAdmin;
 
-  return { user, isAuthenticated, accessToken, isAdmin, isStudent };
+  return { user, isAuthenticated, accessToken, isAdmin, isTeacher, isStudent, isTeacherOrAdmin };
 }

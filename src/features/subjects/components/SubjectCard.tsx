@@ -14,7 +14,7 @@ interface SubjectCardProps {
 }
 
 export function SubjectCard({ subject, examCount, onClick, onEdit, onDelete, index = 0 }: SubjectCardProps) {
-  const { isAdmin } = useAuth();
+  const { isTeacherOrAdmin } = useAuth();
   const color = getSubjectColor(subject.id);
 
   return (
@@ -41,7 +41,7 @@ export function SubjectCard({ subject, examCount, onClick, onEdit, onDelete, ind
           <BookOpen size={22} className="text-white" />
         </div>
 
-        {isAdmin && (
+        {isTeacherOrAdmin && (
           <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
             <button
               onClick={(e) => { e.stopPropagation(); onEdit?.(); }}

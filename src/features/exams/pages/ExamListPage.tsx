@@ -16,7 +16,7 @@ import { useAuth } from '../../auth/hooks/useAuth';
 import { ROUTES } from '../../../constants/routes';
 
 export function ExamListPage() {
-  const { isAdmin } = useAuth();
+  const { isTeacherOrAdmin } = useAuth();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { data: exams = [], isLoading } = useExams();
@@ -63,7 +63,7 @@ export function ExamListPage() {
           </div>
         </div>
 
-        {isAdmin && (
+        {isTeacherOrAdmin && (
           <div className="flex gap-2 shrink-0">
             <Button variant="outline" leftIcon={<Upload size={16} />} onClick={() => setShowImport(true)}>
               Import Excel

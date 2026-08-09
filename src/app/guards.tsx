@@ -35,7 +35,15 @@ export function PrivateRoute() {
   return <Outlet />;
 }
 
-// Guard: chỉ Admin
+// Guard: Cho phép Teacher hoặc Admin (Quyền quản lý bài giảng, đề thi)
+export function TeacherOrAdminRoute() {
+  const { isAuthenticated, isTeacherOrAdmin } = useAuth();
+  if (!isAuthenticated) return <Navigate to={ROUTES.LOGIN} replace />;
+  if (!isTeacherOrAdmin) return <Navigate to={ROUTES.DASHBOARD} replace />;
+  return <Outlet />;
+}
+
+// Guard: Chỉ dành riêng cho Admin (Quản trị hệ thống cấp cao)
 export function AdminRoute() {
   const { isAuthenticated, isAdmin } = useAuth();
   if (!isAuthenticated) return <Navigate to={ROUTES.LOGIN} replace />;
@@ -43,11 +51,11 @@ export function AdminRoute() {
   return <Outlet />;
 }
 
-// Guard: redirect nếu đã đăng nhập
+// Guard: Redirect nếu đã đăng nhập
 export function PublicOnlyRoute() {
-  const { isAuthenticated, isAdmin } = useAuth();
+  const { isAuthenticated, isTeacherOrAdmin } = useAuth();
   if (isAuthenticated) {
-    return <Navigate to={isAdmin ? ROUTES.ADMIN : ROUTES.DASHBOARD} replace />;
+    return <Navigate to={isTeacherOrAdmin ? ROUTES.ADMIN : ROUTES.DASHBOARD} replace />;
   }
   return <Outlet />;
 }

@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
-import { PrivateRoute, AdminRoute, PublicOnlyRoute } from './guards';
+import { PrivateRoute, AdminRoute, TeacherOrAdminRoute, PublicOnlyRoute } from './guards';
 import { ROUTES } from '../constants/routes';
 
 // Auth pages
@@ -49,9 +49,9 @@ const router = createBrowserRouter([
       { path: ROUTES.HISTORY, element: <HistoryPage /> },
       { path: ROUTES.PROFILE, element: <ProfilePage /> },
 
-      // Admin routes
+      // Teacher & Admin management routes
       {
-        element: <AdminRoute />,
+        element: <TeacherOrAdminRoute />,
         children: [
           { path: ROUTES.ADMIN, element: <AdminOverviewPage /> },
           { path: ROUTES.ADMIN_SUBJECTS, element: <SubjectListPage /> },
@@ -59,7 +59,14 @@ const router = createBrowserRouter([
           { path: ROUTES.ADMIN_EXAM_DETAIL(':id'), element: <ExamEditPage /> },
           { path: ROUTES.ADMIN_AI, element: <AiGeneratorPage /> },
           { path: ROUTES.ADMIN_STATS, element: <AdminOverviewPage /> },
-          { path: ROUTES.ADMIN_USERS, element: <ProfilePage /> }, // Placeholder
+        ],
+      },
+
+      // Strict Admin-only routes
+      {
+        element: <AdminRoute />,
+        children: [
+          { path: ROUTES.ADMIN_USERS, element: <ProfilePage /> }, // User management
         ],
       },
     ],

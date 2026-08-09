@@ -27,22 +27,30 @@ const studentNavItems: NavItem[] = [
   { label: 'Hồ sơ', to: ROUTES.PROFILE, icon: <Settings size={20} /> },
 ];
 
-const adminNavItems: NavItem[] = [
+const teacherNavItems: NavItem[] = [
   { label: 'Tổng quan', to: ROUTES.ADMIN, icon: <LayoutDashboard size={20} /> },
   { label: 'Môn học', to: ROUTES.ADMIN_SUBJECTS, icon: <BookOpen size={20} /> },
   { label: 'Đề thi', to: ROUTES.ADMIN_EXAMS, icon: <ClipboardList size={20} /> },
-  { label: 'Học sinh', to: ROUTES.ADMIN_USERS, icon: <Users size={20} /> },
+  { label: 'AI Generator', to: ROUTES.ADMIN_AI, icon: <Sparkles size={20} /> },
+  { label: 'Thống kê', to: ROUTES.ADMIN_STATS, icon: <BarChart3 size={20} /> },
+];
+
+const adminNavItems: NavItem[] = [
+  { label: 'Tổng quan', to: ROUTES.ADMIN, icon: <LayoutDashboard size={20} /> },
+  { label: 'Người dùng', to: ROUTES.ADMIN_USERS, icon: <Users size={20} /> },
+  { label: 'Môn học', to: ROUTES.ADMIN_SUBJECTS, icon: <BookOpen size={20} /> },
+  { label: 'Đề thi', to: ROUTES.ADMIN_EXAMS, icon: <ClipboardList size={20} /> },
   { label: 'AI Generator', to: ROUTES.ADMIN_AI, icon: <Sparkles size={20} /> },
   { label: 'Thống kê', to: ROUTES.ADMIN_STATS, icon: <BarChart3 size={20} /> },
 ];
 
 export function Sidebar() {
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, isTeacher, isTeacherOrAdmin } = useAuth();
   const { mutate: logout, isPending } = useLogout();
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
 
-  const navItems = isAdmin ? adminNavItems : studentNavItems;
+  const navItems = isAdmin ? adminNavItems : isTeacher ? teacherNavItems : studentNavItems;
   const avatarUrl = getAvatarUrl(user?.avatar_url);
 
   return (
@@ -61,7 +69,7 @@ export function Sidebar() {
         collapsed && 'justify-center'
       )} style={{ borderBottomWidth: '3px' }}>
         <button
-          onClick={() => navigate(isAdmin ? ROUTES.ADMIN : ROUTES.DASHBOARD)}
+          onClick={() => navigate(isTeacherOrAdmin ? ROUTES.ADMIN : ROUTES.DASHBOARD)}
           className="flex items-center gap-3 cursor-pointer"
           aria-label="Về trang chủ"
         >
@@ -85,9 +93,11 @@ export function Sidebar() {
             'text-xs font-bold px-2 py-0.5 rounded-full border-2',
             isAdmin
               ? 'bg-purple-100 text-purple-700 border-purple-300'
+              : isTeacher
+              ? 'bg-blue-100 text-blue-700 border-blue-300'
               : 'bg-teal-100 text-teal-700 border-teal-300'
           )}>
-            {isAdmin ? '⚡ Admin' : '🎓 Học sinh'}
+            {isAdmin ? '⚡ Quản trị viên' : isTeacher ? '👨‍🏫 Giáo viên' : '🎓 Học sinh'}
           </span>
         </div>
       )}
