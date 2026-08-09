@@ -14,6 +14,8 @@ RUN npm run build
 # Stage 2: Serve static files using Nginx
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
+
+# Dòng này copy nginx.conf của bạn vào container
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
