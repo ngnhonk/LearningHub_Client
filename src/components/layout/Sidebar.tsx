@@ -46,7 +46,7 @@ const adminNavItems: NavItem[] = [
 ];
 
 export function Sidebar() {
-  const { user, isAdmin, isTeacher, isTeacherOrAdmin } = useAuth();
+  const { user, isAdmin, isTeacher } = useAuth();
   const { mutate: logout, isPending } = useLogout();
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
@@ -70,7 +70,7 @@ export function Sidebar() {
         collapsed && 'justify-center'
       )} style={{ borderBottomWidth: '3px' }}>
         <button
-          onClick={() => navigate(isTeacherOrAdmin ? ROUTES.ADMIN : ROUTES.DASHBOARD)}
+          onClick={() => navigate(ROUTES.HOME)}
           className="flex items-center gap-3 cursor-pointer"
           aria-label="Về trang chủ"
         >

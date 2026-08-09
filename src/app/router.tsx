@@ -1,6 +1,16 @@
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { PrivateRoute, AdminRoute, TeacherOrAdminRoute, PublicOnlyRoute } from './guards';
 import { ROUTES } from '../constants/routes';
+
+// Layouts
+import { GuestLayout } from '../components/layout/GuestLayout';
+
+// Guest pages
+import { HomePage } from '../features/guest/pages/HomePage';
+import { AboutPage } from '../features/guest/pages/AboutPage';
+import { FeaturesPage } from '../features/guest/pages/FeaturesPage';
+import { FaqPage } from '../features/guest/pages/FaqPage';
+import { ContactPage } from '../features/guest/pages/ContactPage';
 
 // Auth pages
 import { LoginPage } from '../features/auth/pages/LoginPage';
@@ -29,7 +39,19 @@ import { HistoryPage } from '../features/exam-attempts/pages/HistoryPage';
 import { NotFoundPage } from './NotFoundPage';
 
 const router = createBrowserRouter([
-  // Public only (redirect if logged in)
+  // Public Guest pages (wrapped in GuestLayout)
+  {
+    element: <GuestLayout />,
+    children: [
+      { path: ROUTES.HOME, element: <HomePage /> },
+      { path: ROUTES.ABOUT, element: <AboutPage /> },
+      { path: ROUTES.FEATURES, element: <FeaturesPage /> },
+      { path: ROUTES.FAQ, element: <FaqPage /> },
+      { path: ROUTES.CONTACT, element: <ContactPage /> },
+    ],
+  },
+
+  // Public only (redirect to dashboard if logged in)
   {
     element: <PublicOnlyRoute />,
     children: [
@@ -74,9 +96,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-
-  // Root redirect
-  { path: ROUTES.HOME, element: <Navigate to={ROUTES.DASHBOARD} replace /> },
 
   // 404
   { path: '*', element: <NotFoundPage /> },
