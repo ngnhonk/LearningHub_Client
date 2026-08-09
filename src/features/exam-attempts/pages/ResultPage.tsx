@@ -29,24 +29,24 @@ export function ResultPage() {
 
   if (!result) return null;
 
-  const raw = result as any;
-  const attemptData = raw.attempt || raw;
-  const score = attemptData.score ?? raw.score ?? 0;
-  const totalMarks = raw.total_marks ?? 10;
-  const scorePercent = totalMarks > 0 ? Math.round((score / totalMarks) * 100) : (raw.pass_percentage ?? 0);
-  const passed = raw.passed ?? (scorePercent >= 50);
-  const correctCount = raw.correct_count ?? 0;
-  const wrongCount = raw.wrong_count ?? 0;
-  const timeSpentSeconds = attemptData.time_spent_seconds ?? raw.time_spent_seconds ?? 0;
+  const attemptData = result.attempt;
+  const score = attemptData.score ?? 0;
+  const totalMarks = result.total_marks ?? 10;
+  const scorePercent = totalMarks > 0 ? Math.round((score / totalMarks) * 100) : 0;
+  const passPercentage = result.pass_percentage ?? 50;
+  const passed = scorePercent >= passPercentage;
+  const correctCount = result.correct_count ?? 0;
+  const wrongCount = result.wrong_count ?? 0;
+  const timeSpentSeconds = attemptData.time_spent_seconds ?? 0;
 
-  const rawDetails: any[] = raw.details || raw.questions || [];
+  const rawDetails: any[] = (result as any).details || [];
   const questionsList = rawDetails.map((item, idx) => ({
-    question_id: item.question?.id || item.question_id || String(idx),
-    question_content: item.question?.content || item.question_content || '',
-    selected_answer_content: item.selected_answer?.content || item.selected_answer_content || '',
-    correct_answer_content: item.correct_answer?.content || item.correct_answer_content || '',
+    question_id: item.question?.id || String(idx),
+    question_content: item.question?.content || '',
+    selected_answer_content: item.selected_answer?.content || '',
+    correct_answer_content: item.correct_answer?.content || '',
     is_correct: Boolean(item.is_correct),
-    explanation: item.question?.explanation || item.explanation || '',
+    explanation: item.question?.explanation || '',
   }));
 
   return (

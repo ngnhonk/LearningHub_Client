@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Clock } from 'lucide-react';
 import { useAttemptStore } from '../store/attemptStore';
 import { formatSeconds } from '../../../lib/utils';
@@ -9,10 +9,16 @@ interface ExamTimerProps {
 }
 
 export function ExamTimer({ onTimeUp }: ExamTimerProps) {
-  const { timeRemaining, decrementTimer } = useAttemptStore();
+  const { timeRemaining, decrementTimer, attemptId } = useAttemptStore();
+  const hasTimedUp = useRef(false);
 
   useEffect(() => {
+    // Don't fire if no active attempt (already submitted/reset)
+    // or if already timed up
+    if (!attemptId || hasTimedUp.current) return;
+
     if (timeRemaining <= 0) {
+      hasTimedUp.current = true;
       onTimeUp();
       return;
     }
@@ -20,7 +26,7 @@ export function ExamTimer({ onTimeUp }: ExamTimerProps) {
       decrementTimer();
     }, 1000);
     return () => clearInterval(interval);
-  }, [timeRemaining, decrementTimer, onTimeUp]);
+  }, [timeRemaining, decrementTimer, onTimeUp, attemptId]);
 
   const isWarning = timeRemaining <= 300; // 5 phút
   const isDanger = timeRemaining <= 60;   // 1 phút

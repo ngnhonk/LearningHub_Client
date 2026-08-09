@@ -18,9 +18,7 @@ export function useStartAttempt() {
       return { attempt, active };
     },
     onSuccess: ({ attempt, active }) => {
-      const durationSeconds = (active.attempt as typeof attempt & { exam?: { duration_minutes?: number } }).exam?.duration_minutes
-        ? ((active.attempt as typeof attempt & { exam?: { duration_minutes?: number } }).exam!.duration_minutes! * 60)
-        : 3600;
+      const durationSeconds = (active.exam?.duration_minutes ?? 60) * 60;
 
       initAttempt(
         attempt.id,

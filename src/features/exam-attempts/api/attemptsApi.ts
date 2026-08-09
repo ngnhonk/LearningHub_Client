@@ -19,7 +19,8 @@ export const attemptsApi = {
   },
 
   submit: async (attemptId: string, answers?: SavedAnswer[]): Promise<ExamAttempt> => {
-    const res = await axiosClient.put<ApiResponse<ExamAttempt>>(ENDPOINTS.ATTEMPTS.SUBMIT(attemptId), { answers });
+    const body = answers && answers.length > 0 ? { answers } : undefined;
+    const res = await axiosClient.put<ApiResponse<ExamAttempt>>(ENDPOINTS.ATTEMPTS.SUBMIT(attemptId), body);
     return res.data.responseObject;
   },
 
