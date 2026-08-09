@@ -32,7 +32,11 @@ export const usersApi = {
     await axiosClient.put(ENDPOINTS.USERS.CHANGE_PASSWORD, payload);
   },
 
-  changeRole: async (payload: { id: string; newRole: 'student' | 'admin' }): Promise<void> => {
+  changeRole: async (payload: { id: string; newRole: 'student' | 'teacher' | 'admin' }): Promise<void> => {
     await axiosClient.put(ENDPOINTS.USERS.CHANGE_ROLE, payload);
+  },
+
+  deleteUser: async (id: string): Promise<void> => {
+    await axiosClient.delete(ENDPOINTS.USERS.BY_ID(id));
   },
 };

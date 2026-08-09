@@ -35,7 +35,7 @@ export function SubjectForm({ initial, onSubmit, isLoading, onCancel, submitLabe
       />
       <Textarea
         id="subject-description"
-        label="Mô tả (tuỳ chọn)"
+        label="Mô tả"
         placeholder="Mô tả ngắn về môn học..."
         value={description}
         onChange={(e) => setDescription(e.target.value)}
