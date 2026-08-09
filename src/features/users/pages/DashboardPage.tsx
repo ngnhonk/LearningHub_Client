@@ -117,7 +117,7 @@ export function DashboardPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-bold text-sm text-[var(--color-foreground)] truncate">{exam.title}</p>
-                    <p className="text-xs text-[var(--color-muted)]">{exam.duration_minutes} phút · {exam.total_marks}đ</p>
+                    <p className="text-xs text-[var(--color-muted)]">{exam.duration_minutes} phút · {exam.total_marks} pts</p>
                   </div>
                   <Button variant="primary" size="sm" leftIcon={<Play size={12} />}
                     onClick={(e) => { e.stopPropagation(); startAttempt(exam.id); }}>

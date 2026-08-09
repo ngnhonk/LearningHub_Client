@@ -51,8 +51,8 @@ export function HistoryPage() {
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-[var(--color-foreground)]">
-                    Lần thi #{attempt.id.slice(-8)}
+                  <p className="text-sm font-bold text-[var(--color-foreground)] line-clamp-1">
+                    {attempt.exam?.title || `Lần thi #${attempt.id.slice(-8)}`}
                   </p>
                   <p className="text-xs text-[var(--color-muted)]">
                     {formatDate(attempt.started_at)}
@@ -64,7 +64,7 @@ export function HistoryPage() {
                   {attempt.score !== null && (
                     <span className="text-lg font-extrabold text-[var(--color-foreground)]"
                       style={{ fontFamily: 'var(--font-heading)' }}>
-                      {attempt.score}đ
+                      {Number(attempt.score).toFixed(1)}{attempt.exam?.total_marks ? `/${attempt.exam.total_marks}` : ''} pts
                     </span>
                   )}
                   <Badge variant={status.variant} size="sm">

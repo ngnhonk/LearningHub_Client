@@ -68,6 +68,10 @@ export interface ExamAttempt {
   started_at: string;
   submitted_at: string | null;
   time_spent_seconds: number | null;
+  exam?: {
+    title: string;
+    total_marks: number;
+  };
 }
 
 export interface SavedAnswer {
