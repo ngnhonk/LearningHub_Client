@@ -29,10 +29,19 @@ export function useVectorStatus() {
 }
 
 export function useSyncQuestions() {
+  const qc = useQueryClient();
   return useMutation({
-    mutationFn: aiApi.syncQuestions,
-    onSuccess: () => toast.success('Đồng bộ vector DB thành công!'),
-    onError: () => toast.error('Đồng bộ thất bại!'),
+    mutationFn: (subjectId: string) => aiApi.syncQuestions(subjectId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['ai', 'vector-status'] });
+      toast.success('Đồng bộ Vector DB thành công! 🔄✨');
+    },
+    onError: (err: unknown) => {
+      const msg =
+        (err as { response?: { data?: { message?: string } }; message?: string })?.response?.data?.message ||
+        (err as { message?: string })?.message;
+      toast.error(`Đồng bộ thất bại: ${msg || 'Vui lòng thử lại!'}`);
+    },
   });
 }
 

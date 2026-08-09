@@ -17,12 +17,17 @@ export const aiApi = {
     formData.append('subject_id', subjectId);
     const res = await axiosClient.post<ApiResponse<unknown>>(ENDPOINTS.AI.UPLOAD_DOCUMENT, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
+      timeout: 180000, // 3 phút cho tài liệu lớn
     });
     return res.data;
   },
 
   syncQuestions: async (subjectId: string): Promise<unknown> => {
-    const res = await axiosClient.post<ApiResponse<unknown>>(ENDPOINTS.AI.SYNC_QUESTIONS, { subject_id: subjectId });
+    const res = await axiosClient.post<ApiResponse<unknown>>(
+      ENDPOINTS.AI.SYNC_QUESTIONS,
+      { subject_id: subjectId },
+      { timeout: 180000 } // 3 phút cho đồng bộ dữ liệu lớn
+    );
     return res.data;
   },
 

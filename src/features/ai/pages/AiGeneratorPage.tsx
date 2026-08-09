@@ -170,7 +170,9 @@ export function AiGeneratorPage() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-[var(--color-muted)]">Số vector</span>
-                  <span className="text-sm font-bold text-[var(--color-foreground)]">{(vectorStatus.count ?? 0).toLocaleString()}</span>
+                  <span className="text-sm font-bold text-[var(--color-foreground)]">
+                    {(vectorStatus.vectors_count ?? vectorStatus.count ?? 0).toLocaleString()}
+                  </span>
                 </div>
               </div>
             ) : (
