@@ -155,7 +155,7 @@ export function ContactPage() {
                 </div>
                 <div>
                   <h4 className="font-extrabold text-base">Địa chỉ văn phòng</h4>
-                  <p className="text-[var(--color-muted)]">Tòa nhà Innovation Hub, Khu Công Nghệ Cao, Thành phố Hà Nội</p>
+                  <p className="text-[var(--color-muted)]">Đại học Phenikaa, Hà Đông, Hà Nội</p>
                 </div>
               </div>
 
@@ -165,7 +165,7 @@ export function ContactPage() {
                 </div>
                 <div>
                   <h4 className="font-extrabold text-base">Email Hỗ Trợ</h4>
-                  <p className="text-[var(--color-muted)]">support@learninghub.vn</p>
+                  <p className="text-[var(--color-muted)]">22010323@st.phenikaa-uni.edu.vn</p>
                 </div>
               </div>
 
@@ -175,7 +175,7 @@ export function ContactPage() {
                 </div>
                 <div>
                   <h4 className="font-extrabold text-base">Hotline Kỹ Thuật</h4>
-                  <p className="text-[var(--color-muted)]">1900 6868 (8:00 - 20:00 hàng ngày)</p>
+                  <p className="text-[var(--color-muted)]">1908 2004</p>
                 </div>
               </div>
 
