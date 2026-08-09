@@ -29,10 +29,8 @@ function getExamColor(id: string) {
 }
 
 export function ExamCard({ exam, onClick, onStart, onEdit, onDelete }: ExamCardProps) {
-  const { isAdmin } = useAuth();
+  const { isTeacherOrAdmin } = useAuth();
   const color = getExamColor(exam.id);
-
-
 
   return (
     <div
@@ -60,7 +58,7 @@ export function ExamCard({ exam, onClick, onStart, onEdit, onDelete }: ExamCardP
           )}
         </div>
 
-        {isAdmin && (
+        {isTeacherOrAdmin && (
           <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
             <button onClick={(e) => { e.stopPropagation(); onEdit?.(); }}
               className="p-1.5 rounded-xl hover:bg-white/60 cursor-pointer" aria-label="Sửa">
@@ -100,7 +98,7 @@ export function ExamCard({ exam, onClick, onStart, onEdit, onDelete }: ExamCardP
       </div>
 
       {/* CTA */}
-      {!isAdmin && onStart && (
+      {!isTeacherOrAdmin && onStart && (
         <Button
           variant={exam.is_published ? "primary" : "ghost"}
           size="sm"
@@ -116,7 +114,7 @@ export function ExamCard({ exam, onClick, onStart, onEdit, onDelete }: ExamCardP
           Bắt đầu thi
         </Button>
       )}
-      {isAdmin && (
+      {isTeacherOrAdmin && (
         <button className="w-full flex items-center justify-end gap-1 text-xs font-bold mt-1 cursor-pointer"
           style={{ color: color.text }} onClick={onClick}>
           Xem chi tiết <ChevronRight size={14} />

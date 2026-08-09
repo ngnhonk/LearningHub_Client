@@ -83,8 +83,8 @@ export function ProfilePage() {
               </h2>
               <p className="text-sm text-[var(--color-muted)">@{user?.username}</p>
               <div className="flex items-center gap-2 mt-2">
-                <Badge variant={user?.role === 'admin' ? 'purple' : 'primary'} dot>
-                  {user?.role === 'admin' ? 'Admin' : 'Học sinh'}
+                <Badge variant={user?.role === 'admin' ? 'purple' : user?.role === 'teacher' ? 'warning' : 'primary'} dot>
+                  {user?.role === 'admin' ? 'Quản trị viên' : user?.role === 'teacher' ? 'Giáo viên' : 'Học sinh'}
                 </Badge>
                 <span className="text-xs text-[var(--color-muted)]">Ngày tham gia: {formatDate(user?.created_at)}</span>
               </div>

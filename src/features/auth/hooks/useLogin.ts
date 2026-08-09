@@ -23,7 +23,7 @@ export function useLogin() {
       toast.success(`Chào mừng trở lại, ${profile.full_name}! 🎉`);
 
       // Redirect theo role
-      if (profile.role === 'admin') {
+      if (profile.role === 'admin' || profile.role === 'teacher') {
         navigate(ROUTES.ADMIN);
       } else {
         navigate(ROUTES.DASHBOARD);

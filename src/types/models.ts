@@ -2,7 +2,7 @@
 // MODELS — Tất cả domain types theo API documentation
 // =====================================================
 
-export type UserRole = 'student' | 'admin';
+export type UserRole = 'student' | 'teacher' | 'admin';
 
 export interface User {
   id: string;

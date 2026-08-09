@@ -15,7 +15,7 @@ import { ROUTES } from '../../../constants/routes';
 import type { Subject } from '../../../types/models';
 
 export function SubjectListPage() {
-  const { isAdmin } = useAuth();
+  const { isTeacherOrAdmin } = useAuth();
   const navigate = useNavigate();
   const { data: subjects = [], isLoading } = useSubjects();
   const { mutate: createSubject, isPending: creating } = useCreateSubject();
@@ -51,7 +51,7 @@ export function SubjectListPage() {
               leftIcon={<Search size={16} />}
             />
           </div>
-          {isAdmin && (
+          {isTeacherOrAdmin && (
             <Button
               variant="primary"
               leftIcon={<Plus size={18} />}
@@ -70,8 +70,8 @@ export function SubjectListPage() {
         <EmptyState
           emoji="📚"
           title={search ? 'Không tìm thấy môn học' : 'Chưa có môn học nào'}
-          description={search ? `Không có kết quả cho "${search}"` : 'Admin hãy thêm môn học để học sinh có thể học!'}
-          action={isAdmin ? { label: '+ Thêm môn học', onClick: () => setShowCreate(true) } : undefined}
+          description={search ? `Không có kết quả cho "${search}"` : 'Giáo viên hãy thêm môn học để học sinh có thể học!'}
+          action={isTeacherOrAdmin ? { label: '+ Thêm môn học', onClick: () => setShowCreate(true) } : undefined}
         />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
