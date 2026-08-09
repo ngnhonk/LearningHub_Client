@@ -43,15 +43,22 @@ export function ExamCard({ exam, onClick, onStart, onEdit, onDelete }: ExamCardP
         boxShadow: `4px 4px 0px ${color.shadow}`,
       }}
     >
-      {/* Published badge */}
+      {/* Published badge & Question count */}
       <div className="flex items-start justify-between mb-3">
-        <Badge
-          variant={exam.is_published ? 'success' : 'gray'}
-          size="sm"
-          dot
-        >
-          {exam.is_published ? 'Sẵn sàng' : 'Tạm khoá'}
-        </Badge>
+        <div className="flex items-center gap-2">
+          <Badge
+            variant={exam.is_published ? 'success' : 'gray'}
+            size="sm"
+            dot
+          >
+            {exam.is_published ? 'Sẵn sàng' : 'Tạm khoá'}
+          </Badge>
+          {exam.question_count !== undefined && (
+            <Badge variant="primary" size="sm">
+              {exam.question_count} câu
+            </Badge>
+          )}
+        </div>
 
         {isAdmin && (
           <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">

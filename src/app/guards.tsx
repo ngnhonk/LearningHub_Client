@@ -17,7 +17,7 @@ export function PrivateRoute() {
     const { isAuthenticated, accessToken } = useAuthStore.getState();
 
     if (isAuthenticated && !accessToken) {
-      // Thử lấy lại profile (interceptor sẽ auto refresh token)
+      // Lấy lại profile vì interceptor sẽ auto refresh token
       usersApi.getMe()
         .then((profile) => {
           const token = useStore.getState().accessToken;

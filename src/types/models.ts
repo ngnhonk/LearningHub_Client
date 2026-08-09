@@ -32,6 +32,7 @@ export interface Exam {
   total_marks: number;
   pass_percentage: number;
   is_published: boolean;
+  question_count?: number;
   created_at: string;
 }
 
