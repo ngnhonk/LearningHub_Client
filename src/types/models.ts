@@ -117,6 +117,7 @@ export interface AdminOverview {
   total_users: number;
   total_subjects: number;
   total_exams: number;
+  total_questions?: number;
   total_attempts: number;
 }
 
