@@ -148,6 +148,7 @@ export interface GenerateExamPayload {
 
 export interface VectorStatus {
   status: string;
+  vectors_count?: number;
   count?: number;
   collections?: Array<{
     name: string;
