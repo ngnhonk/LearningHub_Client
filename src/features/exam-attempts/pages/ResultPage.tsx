@@ -66,7 +66,7 @@ export function ResultPage() {
           </div>
           <h1 className="text-3xl font-extrabold mb-2"
             style={{ fontFamily: 'var(--font-heading)', color: passed ? '#15803d' : '#c2570a' }}>
-            {passed ? 'Chúc mừng! Bạn đã đỗ!' : 'Cố lên! Làm lại nhé!'}
+            {passed ? 'Chúc mừng! Bạn đã vượt qua bài thi!' : 'Không sao đâu, Làm lại nhé!'}
           </h1>
 
           {/* Score circle */}
