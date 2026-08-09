@@ -37,10 +37,19 @@ export function useSyncQuestions() {
 }
 
 export function useUploadDocument() {
+  const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ file, subjectId }: { file: File; subjectId: string }) =>
       aiApi.uploadDocument(file, subjectId),
-    onSuccess: () => toast.success('Upload tài liệu thành công! 📄'),
-    onError: () => toast.error('Upload thất bại!'),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['ai', 'vector-status'] });
+      toast.success('Upload tài liệu RAG thành công! 📄✨');
+    },
+    onError: (err: unknown) => {
+      const msg =
+        (err as { response?: { data?: { message?: string } }; message?: string })?.response?.data?.message ||
+        (err as { message?: string })?.message;
+      toast.error(`Upload thất bại: ${msg || 'Vui lòng kiểm tra lại file!'}`);
+    },
   });
 }
