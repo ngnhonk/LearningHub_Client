@@ -1,19 +1,30 @@
 import { create } from 'zustand';
-import type { SavedAnswer, Question } from '../../../types/models';
+import type { SavedAnswer, Question, Exam } from '../../../types/models';
 
 interface AttemptState {
   attemptId: string | null;
   examId: string | null;
+  exam: Exam | null;
   questions: Question[];
   selectedAnswers: Record<string, string>; // { [questionId]: selectedAnswerId }
+  flaggedQuestions: Record<string, boolean>; // { [questionId]: boolean }
   currentQuestionIndex: number;
   timeRemaining: number; // seconds
   isSaving: boolean;
   lastSavedAt: Date | null;
 
   // Actions
-  initAttempt: (attemptId: string, examId: string, questions: Question[], savedAnswers: SavedAnswer[], durationSeconds: number) => void;
+  initAttempt: (
+    attemptId: string,
+    examId: string,
+    questions: Question[],
+    savedAnswers: SavedAnswer[],
+    durationSeconds: number,
+    exam?: Exam | null,
+    flaggedQuestions?: Record<string, boolean>
+  ) => void;
   setAnswer: (questionId: string, answerId: string) => void;
+  toggleFlag: (questionId: string) => void;
   setCurrentQuestion: (index: number) => void;
   setTimeRemaining: (seconds: number) => void;
   decrementTimer: () => void;
@@ -23,31 +34,72 @@ interface AttemptState {
 
   // Computed helpers (non-reactive, call directly)
   getAnsweredCount: () => number;
+  getFlaggedCount: () => number;
   getSavedAnswers: () => SavedAnswer[];
 }
 
 export const useAttemptStore = create<AttemptState>((set, get) => ({
   attemptId: null,
   examId: null,
+  exam: null,
   questions: [],
   selectedAnswers: {},
+  flaggedQuestions: {},
   currentQuestionIndex: 0,
   timeRemaining: 0,
   isSaving: false,
   lastSavedAt: null,
 
-  initAttempt: (attemptId, examId, questions, savedAnswers, durationSeconds) => {
+  initAttempt: (attemptId, examId, questions, savedAnswers, durationSeconds, exam = null, initialFlags) => {
     const answersMap: Record<string, string> = {};
     savedAnswers.forEach((a) => {
       answersMap[a.question_id] = a.selected_answer_id;
     });
-    set({ attemptId, examId, questions, selectedAnswers: answersMap, timeRemaining: durationSeconds, currentQuestionIndex: 0 });
+
+    let flagsMap: Record<string, boolean> = initialFlags || {};
+    if (!initialFlags && attemptId) {
+      try {
+        const stored = localStorage.getItem(`flagged_${attemptId}`);
+        if (stored) {
+          flagsMap = JSON.parse(stored);
+        }
+      } catch (e) {
+        // ignore JSON parse error
+      }
+    }
+
+    set({
+      attemptId,
+      examId,
+      exam: exam || null,
+      questions,
+      selectedAnswers: answersMap,
+      flaggedQuestions: flagsMap,
+      timeRemaining: durationSeconds,
+      currentQuestionIndex: 0,
+    });
   },
 
   setAnswer: (questionId, answerId) =>
     set((state) => ({
       selectedAnswers: { ...state.selectedAnswers, [questionId]: answerId },
     })),
+
+  toggleFlag: (questionId) =>
+    set((state) => {
+      const nextFlags = {
+        ...state.flaggedQuestions,
+        [questionId]: !state.flaggedQuestions[questionId],
+      };
+      if (state.attemptId) {
+        try {
+          localStorage.setItem(`flagged_${state.attemptId}`, JSON.stringify(nextFlags));
+        } catch (e) {
+          // ignore localStorage error
+        }
+      }
+      return { flaggedQuestions: nextFlags };
+    }),
 
   setCurrentQuestion: (index) => set({ currentQuestionIndex: index }),
 
@@ -64,8 +116,10 @@ export const useAttemptStore = create<AttemptState>((set, get) => ({
     set({
       attemptId: null,
       examId: null,
+      exam: null,
       questions: [],
       selectedAnswers: {},
+      flaggedQuestions: {},
       currentQuestionIndex: 0,
       timeRemaining: 0,
       isSaving: false,
@@ -74,9 +128,12 @@ export const useAttemptStore = create<AttemptState>((set, get) => ({
 
   getAnsweredCount: () => Object.keys(get().selectedAnswers).length,
 
+  getFlaggedCount: () => Object.values(get().flaggedQuestions).filter(Boolean).length,
+
   getSavedAnswers: () =>
     Object.entries(get().selectedAnswers).map(([question_id, selected_answer_id]) => ({
       question_id,
       selected_answer_id,
     })),
 }));
+
