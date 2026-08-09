@@ -35,8 +35,11 @@ export function TakeExamPage() {
     // Attempt to resume active session
     attemptsApi.getActive(examId)
       .then((active) => {
-        const duration = 60 * 60; // Default 60 min; ideally from exam metadata
-        initAttempt(active.attempt.id, examId, active.questions, active.saved_answers, duration);
+        const durationMinutes = active.exam?.duration_minutes ?? 60;
+        const durationSeconds = durationMinutes * 60;
+        const elapsed = Math.floor((Date.now() - new Date(active.attempt.started_at).getTime()) / 1000);
+        const remaining = Math.max(0, durationSeconds - elapsed);
+        initAttempt(active.attempt.id, examId, active.questions, active.saved_answers, remaining);
         setIsLoading(false);
       })
       .catch(() => {

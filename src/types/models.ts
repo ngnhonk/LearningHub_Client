@@ -77,6 +77,7 @@ export interface SavedAnswer {
 
 export interface ActiveAttempt {
   attempt: ExamAttempt;
+  exam: Exam;
   questions: Question[];
   saved_answers: SavedAnswer[];
 }
