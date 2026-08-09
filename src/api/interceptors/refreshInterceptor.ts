@@ -28,8 +28,12 @@ export function applyRefreshInterceptor(client: AxiosInstance) {
     async (error: AxiosError) => {
       const originalRequest = error.config as typeof error.config & { _retry?: boolean };
 
-      // Nếu không phải 401, hoặc đây đã là retry → reject
-      if (error.response?.status !== 401 || originalRequest?._retry) {
+      const isAuthEndpoint = originalRequest?.url === ENDPOINTS.AUTH.LOGIN 
+                          || originalRequest?.url === ENDPOINTS.AUTH.REGISTER
+                          || originalRequest?.url === ENDPOINTS.AUTH.TOKEN;
+
+      // Nếu không phải 401, hoặc đây đã là retry, hoặc lỗi từ chính auth endpoint → reject
+      if (error.response?.status !== 401 || originalRequest?._retry || isAuthEndpoint) {
         return Promise.reject(error);
       }
 

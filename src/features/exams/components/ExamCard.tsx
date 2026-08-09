@@ -93,13 +93,18 @@ export function ExamCard({ exam, onClick, onStart, onEdit, onDelete }: ExamCardP
       </div>
 
       {/* CTA */}
-      {!isAdmin && exam.is_published && onStart && (
+      {!isAdmin && onStart && (
         <Button
-          variant="primary"
+          variant={exam.is_published ? "primary" : "ghost"}
           size="sm"
           fullWidth
+          disabled={!exam.is_published}
           leftIcon={<Play size={14} />}
-          onClick={(e) => { e.stopPropagation(); onStart(); }}
+          onClick={(e) => { 
+            e.stopPropagation(); 
+            if (exam.is_published) onStart(); 
+          }}
+          className={!exam.is_published ? "bg-[var(--color-muted-bg)] text-[var(--color-muted)] border-[var(--color-border)]" : ""}
         >
           Bắt đầu thi
         </Button>
