@@ -19,6 +19,7 @@ import { ProfilePage } from '../features/users/pages/ProfilePage';
 // Admin pages
 import { AdminOverviewPage } from '../features/statistics/pages/AdminOverviewPage';
 import { AiGeneratorPage } from '../features/ai/pages/AiGeneratorPage';
+import { UserManagementPage } from '../features/users/pages/UserManagementPage';
 
 // History page (shared)
 import { HistoryPage } from '../features/exam-attempts/pages/HistoryPage';
@@ -66,7 +67,7 @@ const router = createBrowserRouter([
       {
         element: <AdminRoute />,
         children: [
-          { path: ROUTES.ADMIN_USERS, element: <ProfilePage /> }, // User management
+          { path: ROUTES.ADMIN_USERS, element: <UserManagementPage /> },
         ],
       },
     ],
