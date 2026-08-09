@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Upload, FileSpreadsheet, X } from 'lucide-react';
+import { Upload, FileSpreadsheet, X, Download } from 'lucide-react';
 import { Modal } from '../../../components/ui/Modal';
 import { Button } from '../../../components/ui/Button';
 import { Select } from '../../../components/ui/Select';
@@ -93,11 +93,34 @@ export function ExamImportModal({ isOpen, onClose }: ExamImportModalProps) {
           options={subjects.map((s) => ({ value: s.id, label: s.name }))}
         />
 
-        <div className="text-xs text-[var(--color-muted)] bg-[var(--color-muted-bg)] p-3 rounded-xl">
-          📋 File Excel phải có <strong>2 sheet</strong>: <code>Exam</code> và <code>Questions</code>.
+        {/* Guide box with Download Sample Button */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs bg-[var(--color-muted-bg)] p-3.5 rounded-xl border-2 border-[var(--color-border-strong)]">
+          <div className="space-y-0.5">
+            <p className="font-bold text-[var(--color-foreground)] flex items-center gap-1.5">
+              <FileSpreadsheet size={16} className="text-emerald-500 shrink-0" />
+              Yêu cầu định dạng file
+            </p>
+            <p className="text-[var(--color-muted)]">
+              File Excel gồm <strong>2 sheet</strong>: <code>Exam</code> và <code>Questions</code>.
+            </p>
+          </div>
+          <a
+            href="/templates/mau_import_de_thi.xlsx"
+            download="mau_import_de_thi.xlsx"
+            className="shrink-0"
+          >
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              leftIcon={<Download size={14} />}
+            >
+              Lấy mẫu Excel
+            </Button>
+          </a>
         </div>
 
-        <div className="flex gap-3 justify-end">
+        <div className="flex gap-3 justify-end pt-2">
           <Button variant="ghost" onClick={onClose}>Huỷ</Button>
           <Button
             variant="primary"
